@@ -18,7 +18,7 @@ readLabJack = lambda: ljm.eReadName(handle, "AIN0")
 
 with open("log.csv", "w") as file:
     
-    file.write{"# AOM Frequency, AOM Voltage"}
+    file.write("# AOM Frequency, AOM Voltage")
     
     while True:
         try:
