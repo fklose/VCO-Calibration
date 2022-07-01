@@ -21,14 +21,27 @@ def getFrequency(unit):
 
 
 def getFrequencyMHz():
-    return getFrequency("MHz")
+    process = run(["queryBK.exe"], capture_output=True)
+    out = process.stdout.decode("utf-8")
+    
+    # Get value in MHz
+    value = float(out.strip()[:-3].strip())
+    
+    return value
 
 # Sweep parameters
-V_min, V_max, N = 0, -2, 8, 800
+N_density = 100 / 2.5
+V_min, V_max = -4.2, 8.8
+# V_min, V_max, N = 0, 0, 1
+N = int((V_max - V_min) * N_density)
+
+print(N)
+
+# np.linspace(a)
 
 # Open connection to LabJack and set DAC1 to 0
 handle = openS("T7", "USB", "ANY")
-eWriteName(handle, "DAC1", V_min)
+eWriteName(handle, "TDAC1", V_min)
 sleep(1)
 
 V_out = linspace(V_min, V_max, N)
@@ -36,20 +49,20 @@ V_meas, V_meas_std, F = [], [], []
 # Calibrate for upward sweep
 for i, vout in enumerate(V_out):
     # Set voltage
-    eWriteName(handle, "DAC1", vout)
-    sleep(2) # Allow voltage to settle also give ample time for frequency measurement
+    # eWriteName(handle, "DAC1", vout)
+    eWriteName(handle, "TDAC1", vout)
+    sleep(0.5) # Allow voltage to settle also give ample time for frequency measurement
     
     # Measure frequency with long (1s) gate time
     F.append(f := getFrequencyMHz())
     
     # Take 64 voltage measurements and compute the average and standard deviation
     V_stat = []
-    for _ in range(32):
+    for _ in range(16):
         V_stat.append(eReadName(handle, "AIN2"))
         
     V_meas.append(v := mean(V_stat))
     V_meas_std.append(std(V_stat))
-    
     print(f"{i}\t{v} V\t{f} MHz")
 
 savetxt("calibration_upsweep.csv", 
@@ -62,15 +75,15 @@ V_meas, V_meas_std, F = [], [] ,[]
 # Repeat for downward sweep
 for i, vout in enumerate(V_out):
     # Set voltage
-    eWriteName(handle, "DAC1", vout)
-    sleep(2) # Allow voltage to settle also give ample time for frequency measurement
+    eWriteName(handle, "TDAC1", vout)
+    sleep(0.5) # Allow voltage to settle also give ample time for frequency measurement
     
     # Measure frequency with long (1s) gate time
     F.append(f := getFrequencyMHz())
     
     # Take 64 voltage measurements and compute the average and standard deviation
     V_stat = []
-    for _ in range(32):
+    for _ in range(16):
         V_stat.append(eReadName(handle, "AIN2"))
         
     V_meas.append(v := mean(V_stat))
