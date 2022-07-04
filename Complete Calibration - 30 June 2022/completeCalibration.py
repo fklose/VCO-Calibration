@@ -7,6 +7,7 @@ import scipy.odr as odr
 ### Constants
 R, R_err = 15.0749, 0.0147
 f_err = 0.005
+V_offset, V_offset_err = 6.2952, 0.0005
 ###
 
 V_out, V_meas, V_meas_err, f = np.loadtxt("./Raw Calibration - 30 June 2022/calibration_downsweep.csv", delimiter=",", unpack=True)
@@ -14,6 +15,9 @@ V_out, V_meas, V_meas_err, f = np.loadtxt("./Raw Calibration - 30 June 2022/cali
 # Scale measured voltage appropriately
 V = V_meas * R
 V_err = V * np.sqrt( (V_meas_err / V_meas)**2 + (R_err / R)**2 )
+
+V += V_offset
+V_err = np.sqrt(V_err**2 + V_offset_err**2)
 
 # Define different calibration models
 def linearModel(B, x):
@@ -24,7 +28,7 @@ def quadraticModel(B, x):
 
 linear = odr.Model(linearModel)
 quadratic = odr.Model(quadraticModel)
-poly = odr.polynomial(6)
+poly = odr.polynomial(degree := 6)
 
 beta0_linear = [8, 140]
 beta0_quadratic = [0.2, -15, 100]
@@ -57,8 +61,8 @@ ax1.set_ylabel("Data - Fit")
 
 ax2 = fig.add_subplot(g[0,1])
 ax2.errorbar(V, f, xerr=V_err, yerr=f_err, capsize=0, marker=".", color="black", ls="", markersize=1, label="Data")
-ax2.plot(V, quadraticModel(out_quadratic.beta, V), label="Quadratic Fit", color="red")
-ax2.plot(V, quadraticModel(beta0_quadratic, V), label="Quadratic Guess", color="red", ls="dashed")
+ax2.plot(V, quadraticModel(out_quadratic.beta, V), label="Quadratic Fit", color="orange")
+ax2.plot(V, quadraticModel(beta0_quadratic, V), label="Quadratic Guess", color="orange", ls="dashed")
 ax2.legend()
 ax2.set_ylabel("Frequency [MHz]")
 
@@ -71,7 +75,7 @@ ax3.set_ylabel("Data - Fit")
 ax4 = fig.add_subplot(g[0,2])
 polyModel = np.poly1d(out_poly.beta[::-1])
 ax4.errorbar(V, f, xerr=V_err, yerr=f_err, capsize=0, marker=".", color="black", ls="", markersize=1, label="Data")
-ax4.plot(V, polyModel(V), label="Poly Fit", color="red")
+ax4.plot(V, polyModel(V), label=f"Poly Fit (Order: {degree})", color="green")
 # ax4.plot(V, polyModel(V), label="Quadratic Guess", color="red", ls="dashed")
 ax4.legend()
 ax4.set_ylabel("Frequency [MHz]")
