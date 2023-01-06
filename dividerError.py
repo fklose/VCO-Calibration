@@ -1,3 +1,4 @@
+# In this file I computed the voltage divider ratio and its associated error.
 import numpy as np
 
 V_in0, V_in0_err = 6.2985, 0.0005
