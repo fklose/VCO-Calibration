@@ -1,6 +1,5 @@
 import numpy as np
 import matplotlib.pyplot as plt
-import matplotlib.gridspec as gs
 from scipy.optimize import curve_fit
 from tabulate import tabulate
 
