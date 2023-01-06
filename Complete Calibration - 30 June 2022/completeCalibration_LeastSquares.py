@@ -95,4 +95,7 @@ ax0.set_title("Linear fit")
 ax2.set_title("Quadratic fit")
 ax4.set_title("Polynomial fit")
 
+plt.savefig("linear_fits.png")
+plt.savefig("linear_fits.pdf")
+
 plt.show()

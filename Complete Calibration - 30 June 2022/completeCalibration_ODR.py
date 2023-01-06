@@ -89,4 +89,7 @@ ax0.set_title("Linear fit")
 ax2.set_title("Quadratic fit")
 ax4.set_title("Polynomial fit")
 
+plt.savefig("ODR_fits.png")
+plt.savefig("ODR_fits.pdf")
+
 plt.show()
