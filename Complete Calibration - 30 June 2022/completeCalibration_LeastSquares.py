@@ -19,9 +19,6 @@ V_err = V * np.sqrt( (V_meas_err / V_meas)**2 + (alpha_err / alpha)**2 )
 V += V_offset
 V_err = np.sqrt(V_err**2 + V_offset_err**2)
 
-# Save intermediate .csv for quick calibration
-np.savetxt("./Complete Calibration - 30 June 2022/calibration.csv", list(zip(V, f)))
-
 # Define different calibration models
 def linearModel(x, m, b):
     return m*x + b
