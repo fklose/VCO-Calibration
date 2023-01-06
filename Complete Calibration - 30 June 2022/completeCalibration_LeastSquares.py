@@ -5,7 +5,7 @@ from scipy.optimize import curve_fit
 from tabulate import tabulate
 
 ### Constants
-R, R_err = 15.0749, 0.0147
+alpha, alpha_err = 15.0749, 0.0147
 f_err = 0.005
 V_offset, V_offset_err = 6.2952, 0.0005
 ###
@@ -13,8 +13,8 @@ V_offset, V_offset_err = 6.2952, 0.0005
 V_out, V_meas, V_meas_err, f = np.loadtxt("./Raw Calibration - 30 June 2022/calibration_upsweep.csv", delimiter=",", unpack=True)
 
 # Scale measured voltage appropriately
-V = V_meas * R
-V_err = V * np.sqrt( (V_meas_err / V_meas)**2 + (R_err / R)**2 )
+V = V_meas * alpha
+V_err = V * np.sqrt( (V_meas_err / V_meas)**2 + (alpha_err / alpha)**2 )
 
 V += V_offset
 V_err = np.sqrt(V_err**2 + V_offset_err**2)

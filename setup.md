@@ -17,8 +17,8 @@
 ## Voltage Divider (30 June 2022):
 * $V_{in} = 6.2985(5), 4.9015(5)$ V
 * $V_{out} = 0.4180(5), 0.3250(5)$ V
-* $\frac{V_{in}}{V_{out}} = 15.0682(181), 15.0815(233)$
-* To be safe take the mean of the two values: $R = 15.0749(147)$
+* $\alpha = \frac{V_{in}}{V_{out}} = 15.0682(181), 15.0815(233)$
+* To be safe take the mean of the two values: $\alpha = 15.0749(147)$
 ## Battery Offset (4 July 2022)
 $V_{out} = 9.2605(5)$
 $V_{in} = 2.96525(5) \approx 2.9653(1)$
