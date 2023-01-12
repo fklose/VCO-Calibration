@@ -16,6 +16,7 @@ This repository includes the following scripts:
 * `FrequencyCounter/main.cpp`: Code for communicating with the frequency counter using a serial port. This can "in theory" be done in python but I ran into some issues on Linux and python where the frequency counter would not be recognized by the device. It turns out that this is because for the counter to send a signal, the USB pins need to be configured properly (`DTR` needs to be on, and `RTS` needs to be off. Both are always on by default, which prevents the device from being seen).
     * Uses [serialib](https://lucidar.me/en/serialib/cross-plateform-rs232-serial-library/) which is a C++ library for communicating with serial devices.
     * The code should work fine on Windows and Linux, barring the issue of the DTR and RTS ports
+* `dividerError.py`: This is not a script but more of a calculation of the division ratio of the voltage divider and its associated error.
 
 ## Analysis code
 To convert the measured data to a voltage-frequency calibration I tried different methods of fitting the data with polynomials (linear, quadratic and sixth order):
