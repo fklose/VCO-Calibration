@@ -2,7 +2,7 @@
 This repository includes scripts for measuring frequency as a function of control voltage and an attempt to fit the calibration data using both ODR and least squares methods.
 
 ## Hardware
-1. LabJack T7 with a $\pm$10V DAC attachment. The LabJack is used to sweep the control voltage. It also measures the control voltage seen by the VCO.
+1. LabJack T7 with a $\pm$ 10V DAC attachment. The LabJack is used to sweep the control voltage. It also measures the control voltage seen by the VCO.
 2. Battery pack for producing a 6V offset.
 3. [B&K 1856D frequency counter](https://www.bkprecision.com/products/frequency-counters/1856D).
     * [1856D_datasheet.pdf](https://bkpmedia.s3.us-west-1.amazonaws.com/downloads/datasheets/en-us/1856D_datasheet.pdf)
